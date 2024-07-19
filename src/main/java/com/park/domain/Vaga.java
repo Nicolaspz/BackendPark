@@ -24,17 +24,17 @@ public class Vaga implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String code_vaga;
+	private String codeVaga;
 	private boolean status;
 	private boolean previlegio;
 	
 	@OneToMany(mappedBy = "vaga")
 	List<Entrada_Saida> Entrada_Saida= new ArrayList<>();
 	
-	public Vaga(Integer id, String code_vaga, boolean status, boolean previlegio) {
+	public Vaga(Integer id, String codeVaga, boolean status, boolean previlegio) {
 		super();
 		this.id = id;
-		this.code_vaga = code_vaga;
+		this.codeVaga = codeVaga;
 		this.status = status;
 		this.previlegio = previlegio;
 	}
@@ -57,13 +57,13 @@ public class Vaga implements Serializable {
 	}
 
 
-	public String getCode_vaga() {
-		return code_vaga;
+	public String getCodeVaga() {
+		return codeVaga;
 	}
 
 
-	public void setCode_vaga(String code_vaga) {
-		this.code_vaga = code_vaga;
+	public void setCodeVaga(String code_vaga) {
+		this.codeVaga = code_vaga;
 	}
 
 

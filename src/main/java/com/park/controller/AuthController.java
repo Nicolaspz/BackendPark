@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.park.domain.Role;
 import com.park.domain.User;
 import com.park.service.TokenService; 
 import com.park.tdo.LoginRequestDTO;
@@ -36,7 +37,7 @@ public class AuthController {
         User user = this.repository.findByTelefone(body.getTelefone()).orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(body.getPassword(), user.getSenha())) {
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getNome(), token));
+            return ResponseEntity.ok(new ResponseDTO(user.getNome(),user.getId(),user.getRole().name(),token));
         }
         return ResponseEntity.badRequest().build();
     }
@@ -45,16 +46,17 @@ public class AuthController {
     public ResponseEntity<ResponseDTO> register(@RequestBody RegisterRequestDTO body) {
         Optional<User> existingUser = repository.findByTelefone(body.getTelefone());
         if (existingUser.isPresent()) {
-            return ResponseEntity.badRequest().body(new ResponseDTO("Este telefone já está registrado.", null));
+            return ResponseEntity.badRequest().body(new ResponseDTO("Este telefone já está registrado.", null,null,null));
         }
 
         User newUser = new User();
         newUser.setSenha(passwordEncoder.encode(body.getPassword()));
         newUser.setTelefone(body.getTelefone());
         newUser.setNome(body.getName());
+        newUser.setRole(Role.USER);
         repository.save(newUser);
 
         String token = tokenService.generateToken(newUser);
-        return ResponseEntity.ok(new ResponseDTO(newUser.getNome(), token));
+        return ResponseEntity.ok(new ResponseDTO(newUser.getNome(),newUser.getId(),newUser.getRole().name(),token));
     }
 }
