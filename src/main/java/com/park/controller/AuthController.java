@@ -4,7 +4,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,5 +61,15 @@ public class AuthController {
 
         String token = tokenService.generateToken(newUser);
         return ResponseEntity.ok(new ResponseDTO(newUser.getNome(),newUser.getId(),newUser.getRole().name(),token));
+    }
+    
+    @GetMapping("/me")
+    public ResponseEntity<ResponseDTO> getMe(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(401).build(); // Unauthorized
+        }
+
+        User user = repository.findByTelefone(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
+        return ResponseEntity.ok(new ResponseDTO(user.getNome(), user.getId(), user.getRole().name(), null));
     }
 }

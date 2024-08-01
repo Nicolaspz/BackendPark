@@ -3,17 +3,27 @@ package com.park.tdo;
 public class ResponseVaga {
 	private Integer id;
 	private String code_vaga;
-	private boolean status;
+	private boolean oucupado;
 	private boolean previlegio;
+	private boolean reservado;
 	
 	
 	
-	public ResponseVaga(Integer id, String code_vaga, boolean status, boolean previlegio) {
+	public boolean isReservado() {
+		return reservado;
+	}
+
+	public void setReservado(boolean reservado) {
+		this.reservado = reservado;
+	}
+
+	public ResponseVaga(Integer id, String code_vaga, boolean oucupado, boolean previlegio,boolean reservado) {
 		super();
 		this.id = id;
 		this.code_vaga = code_vaga;
-		this.status = status;
+		this.oucupado = oucupado;
 		this.previlegio = previlegio;
+		this.reservado = reservado;
 	}
 	
 	public Integer getId() {
@@ -28,11 +38,11 @@ public class ResponseVaga {
 	public void setCode_vaga(String code_vaga) {
 		this.code_vaga = code_vaga;
 	}
-	public boolean isStatus() {
-		return status;
+	public boolean isOucupado() {
+		return oucupado;
 	}
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setOucupado(boolean status) {
+		this.oucupado = status;
 	}
 	public boolean isPrevilegio() {
 		return previlegio;

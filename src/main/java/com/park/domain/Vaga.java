@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,18 +26,35 @@ public class Vaga implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String codeVaga;
-	private boolean status;
+	private boolean oucupado;
 	private boolean previlegio;
 	
+	 @Column(nullable = false)
+	 private boolean reservado = false;
+	
+	public boolean isReservado() {
+		return reservado;
+	}
+
+
+	public void setReservado(boolean reservado) {
+		this.reservado = reservado;
+	}
+
+
 	@OneToMany(mappedBy = "vaga")
 	List<Entrada_Saida> Entrada_Saida= new ArrayList<>();
 	
-	public Vaga(Integer id, String codeVaga, boolean status, boolean previlegio) {
+	@OneToMany(mappedBy = "vaga")
+	List<Reserva> reserva= new ArrayList<>();
+	
+	public Vaga(Integer id, String codeVaga, boolean oucupado, boolean previlegio) {
 		super();
 		this.id = id;
 		this.codeVaga = codeVaga;
-		this.status = status;
+		this.oucupado = oucupado;
 		this.previlegio = previlegio;
+		
 	}
 
 
@@ -67,13 +85,13 @@ public class Vaga implements Serializable {
 	}
 
 
-	public boolean isStatus() {
-		return status;
+	public boolean isOucupado() {
+		return oucupado;
 	}
 
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setOucupado(boolean oucupado) {
+		this.oucupado = oucupado;
 	}
 
 

@@ -34,7 +34,7 @@ public class VagaController {
     }
     
     private ResponseVaga convertToResponseVaga(Vaga vaga) {
-        return new ResponseVaga(vaga.getId(), vaga.getCodeVaga(), vaga.isStatus(), vaga.isPrevilegio());
+        return new ResponseVaga(vaga.getId(), vaga.getCodeVaga(), vaga.isOucupado(), vaga.isPrevilegio(), vaga.isReservado());
     }
 
     @GetMapping("/{id}")

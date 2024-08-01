@@ -30,6 +30,7 @@ public class SecurityConfig {
         http.csrf().disable()
             .authorizeHttpRequests()
             .requestMatchers("/auth/login", "/auth/register").permitAll()
+            .requestMatchers("/ocorrencia/**").authenticated()
             .anyRequest().authenticated()
             .and().sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
