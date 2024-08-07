@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.park.domain.Role;
 import com.park.domain.User;
 import com.park.domain.Vaga;
 import com.park.service.UserService;
@@ -69,6 +70,14 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userService.save(user);
         return ResponseEntity.ok(savedUser);
+        
+        /*
+         * User newUser = new User();
+        newUser.setSenha(passwordEncoder.encode(body.getPassword()));
+        newUser.setTelefone(body.getTelefone());
+        newUser.setNome(body.getName());
+        newUser.setRole(Role.USER);
+        repository.save(newUser);*/
     }
     
    
